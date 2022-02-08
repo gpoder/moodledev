@@ -59,7 +59,7 @@ docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/
 docker-php-ext-install -j$(nproc) ldap
 
 # Memcached, MongoDB, Redis, APCu, igbinary, xdebug.
-pecl install memcached mongodb redis apcu igbinary xdebug
+pecl install memcached mongodb redis apcu igbinary xdebug-2.9.8
 docker-php-ext-enable memcached mongodb redis apcu igbinary xdebug
 
 # ZIP
