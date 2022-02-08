@@ -35,14 +35,12 @@ while true; do
             shift
             ;;
         -f|--start)
-            cd coding/docker_eass/docker-ci_testrunner/
             ./bin/moodle-docker-compose up -d
             exit
             shift
             ;;
         --restart)
             docker stop $(docker ps -aq)
-            cd coding/docker_eass/docker-ci_testrunner/
             ./bin/moodle-docker-compose up -d
             exit
             shift
