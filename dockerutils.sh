@@ -11,7 +11,7 @@ if [[ ${PIPESTATUS[0]} -ne 4 ]]; then
 fi
 
 OPTIONS=dfo:v
-LONGOPTS=start,stop
+LONGOPTS=start,stop,restart
 
 # -regarding ! and PIPESTATUS see above
 # -temporarily store output to be able to check for errors
@@ -35,11 +35,19 @@ while true; do
             shift
             ;;
         -f|--start)
+            cd coding/docker_eass/docker-ci_testrunner/
             ./bin/moodle-docker-compose up -d
             exit
             shift
             ;;
-        *)
+        --restart)
+            docker stop $(docker ps -aq)
+            cd coding/docker_eass/docker-ci_testrunner/
+            ./bin/moodle-docker-compose up -d
+            exit
+            shift
+            ;;
+         *)
             echo "Programming error"
             exit 3
             ;;
