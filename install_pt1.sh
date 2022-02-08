@@ -1,5 +1,6 @@
-if ["$1" ]
+if [ "$1" ]
   then
+    sudo apt install -y unzip
     unzip -P $1 key.zip
     mv id_rsa ~/.ssh/
     mv id_rsa.pub ~/.ssh/
