@@ -58,3 +58,22 @@ if [ -f "$FILE" ]; then
   touch ~/part3
   exit 1
 fi
+
+FILE=~/part3
+if [ -f "$FILE" ]; then
+  ./bin/moodle-docker-compose build
+  mv mount/moodle/config.php mount/
+  git clone git@git.catalyst-au.net:monash/moodle-eassess.git mount/moodle
+  cd mount/moodle
+  git submodule update --init --recursive --jobs=8
+  cd ../..
+  sudo sed -i 's/Listen 80/Listen 8080/g' /etc/apache2/ports.conf
+  echo 'net.ipv4.ip_unprivileged_port_start=80' | sudo tee -a /etc/sysctl.conf
+  sudo service apache2 restart
+  ./bin/moodle-docker-compose up -d
+  mv mount/moodle/config.php mount/moodle/config.bak
+  cp mount/config.php mount/moodle/
+  bash rebuild.sh
+  rm -rf ~/part3
+  rm -rf ~/start
+fi
